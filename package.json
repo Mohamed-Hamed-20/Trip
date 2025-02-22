@@ -3,11 +3,12 @@
   "version": "1.0.0",
   "main": "dist/server.js",
   "scripts": {
-    "build": "tsc",
-    "watch": "tsc --watch",
+  "build": "tsc && copyfiles -u 1 spec/**/*.ts dist/",
     "start": "node dist/server.js",
-    "dev": "concurrently \"tsc --watch\" \"nodemon --watch src --exec 'ts-node src/server.ts'\""
-  },
+    "dev": "concurrently \"npm run watch\" \"nodemon --watch dist --exec \\\"node dist/server.js\\\"\"",
+    "test:build": "tsc && jasmine",
+    "test": "cd dist && node ../node_modules/jasmine/bin/jasmine.js"
+    },
   "dependencies": {
     "@types/express": "^5.0.0",
     "dotenv": "^16.4.7",
@@ -18,10 +19,16 @@
     "socket.io": "^4.8.1"
   },
   "devDependencies": {
+    "@types/jasmine": "^5.1.6",
     "@types/jsonwebtoken": "^9.0.8",
     "@types/node": "^22.13.4",
+    "@types/supertest": "^6.0.2",
     "concurrently": "^9.1.2",
+    "jasmine": "^5.6.0",
+    "jasmine-core": "^5.6.0",
+    "jasmine-spec-reporter": "^7.0.0",
     "nodemon": "^3.1.9",
+    "supertest": "^7.0.0",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^1.1.8",
     "typescript": "^5.7.3"
